@@ -43,7 +43,7 @@ jobs:
     - task: verify
       file: git-repo/ci/tasks/verify-test.yml
       params:
-        CONCOURSE_DEMO_URL: http://bb-spring-music-{{CF_TEST_SPACE}}.cfapps.haas-46.pez.pivotal.io
+        CONCOURSE_DEMO_URL: {{CONCOURSE_DEMO_URL}}
 
   - name: promote-to-uat
     serial_groups: [version]
@@ -114,6 +114,7 @@ resources:
   source:
     uri: {{GIT_REPO}}
     branch: master
+    private_key: {{private-repo-key}}
 
 - name: deploy-test-app
   type: cf
@@ -146,13 +147,14 @@ resources:
     skip_cert_check: true
 
 - name: version
-  type: semver
+  type: semver  
   source:
-    bucket: {{S3_BUCKET}}
-    key: {{S3_VERSION_FILE}}
-    access_key_id: {{S3_ACCESS_KEY_ID}}
-    secret_access_key: {{S3_SECRET_ACCESS_KEY}}
+    driver: git
     initial_version: 1.0.0
+    uri: {{git-uri}}
+    branch: version
+    file: version
+    private_key: {{private-repo-key}}
 
 - name: release-candidate
   type: s3

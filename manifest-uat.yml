@@ -3,4 +3,4 @@ applications:
 - name: spring-music-uat
   memory: 512M
   instances: 1
-  host: tsg-spring-music-uat
+  host: spring-music-uat
