@@ -8,6 +8,8 @@ apply plugin: 'war'
 
 apply plugin: 'cloudfoundry'
 
+apply plugin: 'dynatrace-gradle-plugin'
+
 sourceSets {
     main {
         java {
@@ -32,6 +34,7 @@ archivesBaseName = "spring-music"
 
 buildscript {
     repositories {
+        flatDir dirs: 'libs'
         jcenter()
         mavenLocal()
         mavenCentral()
@@ -40,6 +43,7 @@ buildscript {
     dependencies {
         classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.5'
         classpath 'org.cloudfoundry:cf-gradle-plugin:1.1.1'
+        classpath 'com.dynatrace.diagnostics.automation:gradle.plugin:6.5.0'
     }
 }
 
